@@ -5,15 +5,14 @@
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
 #include "ext_led.h" 
+#include "ext_uart.h"
  
 #ifdef RTE_Compiler_EventRecorder
 #include "EventRecorder.h"
 #endif
-uint32_t gTableA[200];
-uint32_t gTableB[200];
 
-osThreadId_t thread1,thread2,thread3,thread4;
-osSemaphoreId_t mutexLed, mutexData;
+osThreadId_t thread1,thread2;
+osSemaphoreId_t mutexData;
 
  const osThreadAttr_t thread1_attr = {
   .stack_size = 1024,          // Create the thread stack size of 1024 bytes
@@ -24,11 +23,6 @@ osSemaphoreId_t mutexLed, mutexData;
   .stack_size = 1024,          // Create the thread stack size of 1024 bytes
 	.priority = osPriorityNormal, //Set initial thread priority to high
 	 .name = "SECOND"
-};
- const osThreadAttr_t thread3_attr = {
-  .stack_size = 1024,          // Create the thread stack size of 1024 bytes
-	.priority = osPriorityAboveNormal, //Set initial thread priority to high
-	 .name = "DUMMY"
 };
 
  const osSemaphoreAttr_t mutexLed_attr = {
@@ -44,59 +38,22 @@ osSemaphoreId_t mutexLed, mutexData;
  * Thread 1
  *---------------------------------------------------------------------------*/
 void Thread_1 (void *argument) {
-  uint32_t i;
-	
-  for (;;) 
-	{
-		osSemaphoreAcquire(mutexLed,osWaitForever);
-		osSemaphoreAcquire(mutexData,osWaitForever);
-		Ext_LEDs(1);
-		EventStartC(1);
-		for(i=0;i<200;i++)
-		{
-			for(uint32_t j=0;j<1000;j++)
-			{
-				gTableA[i] = gTableB[i];
-			}
-		}
-		EventStopC(1);
-		Ext_LEDs(0);
+	uint8_t msg[] = "Hello World. This is a message from Task 1.\r\n";
+	for (;;) {
+		osSemaphoreAcquire(mutexData, osWaitForever);
+		HAL_StatusTypeDef state = HAL_UART_Transmit(&ext_uart, msg, sizeof(msg), 50);
 		osSemaphoreRelease(mutexData);
-		osSemaphoreRelease(mutexLed);
 	}
 }
 /*----------------------------------------------------------------------------
  * Thread 2
  *---------------------------------------------------------------------------*/
 void Thread_2 (void *argument) {
-  uint32_t i;
-  for (;;) 
-	{
-		osSemaphoreAcquire(mutexLed,osWaitForever);
-		osSemaphoreAcquire(mutexData,osWaitForever);
-		Ext_LEDs(2);
-		EventStartC(2);
-		for(i=0;i<200;i++)
-		{
-			for(uint32_t j=0;j<1000;j++)
-			{
-				gTableA[i] = gTableB[i];
-			}
-		}
-		EventStopC(2);
-		Ext_LEDs(0);
+	uint8_t msg[] = "Hi there, special word from Task 2.\r\n";
+	for (;;) {
+		osSemaphoreAcquire(mutexData, osWaitForever);
+		HAL_StatusTypeDef state = HAL_UART_Transmit(&ext_uart, msg, sizeof(msg), 50);
 		osSemaphoreRelease(mutexData);
-		osSemaphoreRelease(mutexLed);
-	}
-}
- 
-/*----------------------------------------------------------------------------
- * Thread 3
- *---------------------------------------------------------------------------*/
-void Thread_3 (void *argument) {
-  for (;;) 
-	{
-		osDelay(200);
 	}
 }
 
@@ -112,15 +69,13 @@ int main (void) {
 #endif
  
   osKernelInitialize();                 // Initialize CMSIS-RTOS
-	mutexLed = osSemaphoreNew(1,1,&mutexLed_attr);
+	Ext_UART_Init(115200);
 	mutexData = osSemaphoreNew(1,1,&mutexData_attr);
 	
   thread1 = osThreadNew(Thread_1, NULL,  &thread1_attr);    // Create application thread
   thread2 = osThreadNew(Thread_2, NULL,  &thread2_attr);    // Create application thread
-  thread3 = osThreadNew(Thread_3, NULL,  &thread3_attr);    // Create application thread
 //---------------------------------------------------------------------------------------
 	osSemaphoreGetName(mutexData);
-	osSemaphoreGetName(mutexLed);
   osKernelStart();                      // Start thread execution
   for (;;) {}
 }
