@@ -399,6 +399,9 @@
         <Group>
           <GroupName>::Device</GroupName>
         </Group>
+        <Group>
+          <GroupName>::Hesso pack</GroupName>
+        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -407,6 +410,12 @@
     <apis>
       <api Capiversion="2.1.3" Cclass="CMSIS" Cgroup="RTOS2" exclusive="1">
         <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </api>
+      <api Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" exclusive="1">
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>
@@ -425,8 +434,50 @@
           <targetInfo name="Target 1"/>
         </targetInfos>
       </component>
+      <component Cclass="Hesso pack" Cgroup="Extension Board" Csub="LEDs" Cvendor="HessoValais" Cversion="1.0.0" condition="any">
+        <package name="Extension_board" schemaVersion="1.2" url="http://kpacks.hevs.ch/HessoValais.Extension_board.pdsc" vendor="HessoValais" version="1.2.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 Framework Classic">
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Common" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 HAL Common">
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="Cortex" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 HAL">
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="GPIO" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 HAL">
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="PWR" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 HAL">
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="STM32Cube HAL" Csub="RCC" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 HAL GPIO">
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>
@@ -463,9 +514,25 @@
           <targetInfo name="Target 1"/>
         </targetInfos>
       </file>
+      <file attr="config" category="header" name="CMSIS\Driver\Config\RTE_Device.h" version="1.5.1">
+        <instance index="0">RTE\Device\STM32F746NGHx\RTE_Device.h</instance>
+        <component Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 Framework Classic"/>
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </file>
       <file attr="config" category="source" condition="STM32F746_ARMCC" name="Drivers\CMSIS\Device\ST\STM32F7xx\Source\Templates\arm\startup_stm32f746xx.s" version="1.2.2">
         <instance index="0">RTE\Device\STM32F746NGHx\startup_stm32f746xx.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.2.4" condition="STM32F7 CMSIS"/>
+        <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="MDK\Templates\Inc\stm32f7xx_hal_conf.h" version="1.2.7">
+        <instance index="0">RTE\Device\STM32F746NGHx\stm32f7xx_hal_conf.h</instance>
+        <component Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.2.7" condition="STM32F7 Framework Classic"/>
         <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
@@ -475,6 +542,22 @@
         <instance index="0">RTE\Device\STM32F746NGHx\system_stm32f7xx.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.2.4" condition="STM32F7 CMSIS"/>
         <package name="STM32F7xx_DFP" schemaVersion="1.6.0" url="http://www.keil.com/pack/" vendor="Keil" version="2.12.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="source" name="extension_board\ext_led.c">
+        <instance index="0">RTE\Hesso_pack\ext_led.c</instance>
+        <component Cclass="Hesso pack" Cgroup="Extension Board" Csub="LEDs" Cvendor="HessoValais" Cversion="1.0.0" condition="any"/>
+        <package name="Extension_board" schemaVersion="1.2" url="http://kpacks.hevs.ch/HessoValais.Extension_board.pdsc" vendor="HessoValais" version="1.2.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="extension_board\ext_led.h">
+        <instance index="0">RTE\Hesso_pack\ext_led.h</instance>
+        <component Cclass="Hesso pack" Cgroup="Extension Board" Csub="LEDs" Cvendor="HessoValais" Cversion="1.0.0" condition="any"/>
+        <package name="Extension_board" schemaVersion="1.2" url="http://kpacks.hevs.ch/HessoValais.Extension_board.pdsc" vendor="HessoValais" version="1.2.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>

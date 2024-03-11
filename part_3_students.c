@@ -32,11 +32,11 @@ osSemaphoreId_t mutexLed, mutexData;
 };
 
  const osSemaphoreAttr_t mutexLed_attr = {
-  .name = "Mtx_LED",          // Create the thread stack size of 1024 bytes
+  .name = "Mtx_LED",
 };
 
  const osSemaphoreAttr_t mutexData_attr = {
-  .name = "Mtx_DATA",          // Create the thread stack size of 1024 bytes
+  .name = "Mtx_DATA",
 };
 
 
