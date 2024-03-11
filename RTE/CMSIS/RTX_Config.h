@@ -64,7 +64,7 @@
 //     <i> Defines how many ticks a thread will execute before a thread switch.
 //     <i> Default: 5
 #ifndef OS_ROBIN_TIMEOUT
-#define OS_ROBIN_TIMEOUT            1
+#define OS_ROBIN_TIMEOUT            5
 #endif
  
 //   </e>
